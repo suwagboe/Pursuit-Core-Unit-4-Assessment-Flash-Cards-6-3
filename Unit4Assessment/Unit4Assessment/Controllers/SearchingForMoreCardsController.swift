@@ -13,10 +13,10 @@ class SearchingForMoreCardsController: UIViewController {
     
     public var dP : DataPersistence<CardData>!
     
-    private var moreCardsView = MoreCardsView()
+    private var moreCardView = MoreCardsView()
 
     override func loadView() {
-        view = moreCardsView
+        view = moreCardView
     }
 
     override func viewDidLoad() {
@@ -24,7 +24,35 @@ class SearchingForMoreCardsController: UIViewController {
 
         view.backgroundColor = .purple
         
+        moreCardView.collectionV.dataSource = self
+        moreCardView.collectionV.delegate = self
+        
+        moreCardView.collectionV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "moreCell")
     }
     
 
+}
+
+
+
+extension SearchingForMoreCardsController: UICollectionViewDelegateFlowLayout {
+    
+}
+
+extension SearchingForMoreCardsController: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "moreCell", for: indexPath)
+        
+        
+      //  let selectedCard = addedCards[indexPath.row]
+      //  cell.delegate is the delegate set here?????
+        
+        cell.backgroundColor = .white
+    
+       // cell.configureCell(for: selectedCard)
+        return cell
+    }
 }
