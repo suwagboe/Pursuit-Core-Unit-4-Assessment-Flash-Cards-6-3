@@ -13,13 +13,17 @@ class CreatingCardsController: UIViewController {
     
     public var dp : DataPersistence<CardData>!
    
-
+    private let createsView = CreatingCardsView()
+    
+    override func loadView() {
+       view = createsView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .systemPink
-        
+       // createsView.firstFactText.de
     }
     
 

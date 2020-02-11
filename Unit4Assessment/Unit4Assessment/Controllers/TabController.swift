@@ -46,7 +46,8 @@ class TabController: UITabBarController {
         super.viewDidLoad()
 // do I need a naviagtion controller in order to pass things
         view.backgroundColor = .systemGroupedBackground
-        viewControllers = [LAMCC, CCC, SFMCC]
+        viewControllers = [UINavigationController(rootViewController: LAMCC), UINavigationController(rootViewController: CCC)
+            , UINavigationController(rootViewController: SFMCC)]
     }
 
 }

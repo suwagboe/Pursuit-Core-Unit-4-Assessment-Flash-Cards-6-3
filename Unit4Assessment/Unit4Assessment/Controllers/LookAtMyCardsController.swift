@@ -57,7 +57,12 @@ class LookAtMyCardsController: UIViewController {
       }
       
     private func fetchCards(){
-       addedCards = CardData.getData()
+     
+        do {
+            addedCards = try dataP.loadItems()
+        } catch {
+            print("these are the errors \(error)")
+        }
 //        CardsAPIClient.getTheCardInfo {
 //                 [weak self]
 //                 (result) in

@@ -15,7 +15,7 @@ class SearchingForMoreCardsController: UIViewController {
     
     private var moreCardView = MoreCardsView()
     
-    private var seguedCard : CardData?
+    private var selectedCard : CardData?
 
     private var thereAreMoreCardsArray = [CardData]() {
         didSet {
@@ -50,16 +50,6 @@ class SearchingForMoreCardsController: UIViewController {
       private func fetchCards(){
         thereAreMoreCardsArray = CardData.getData()
 
-//          CardsAPIClient.getTheCardInfo {
-//              [weak self]
-//              (result) in
-//              switch result {
-//              case .failure(let error):
-//                             print("well its not working\(error)")
-//              case .success(let cards):
-//                  self?.thereAreMoreCardsArray = cards
-//              }
-//          }
       }
 }
 
@@ -74,6 +64,13 @@ extension SearchingForMoreCardsController: UICollectionViewDelegateFlowLayout {
          let itemHeight: CGFloat = maxSize.height * 0.15 // make it 30%
          return CGSize(width: itemWidth, height: itemHeight)
      }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let theCard = thereAreMoreCardsArray[indexPath.row]
+        
+        selectedCard = theCard
+        
+    }
 }
 
 extension SearchingForMoreCardsController: UICollectionViewDataSource{
@@ -107,6 +104,8 @@ extension SearchingForMoreCardsController: MoreCardsCellDelegate {
                          alertAction in
                        
                         print("should have added because we are inside of the addAction")
+            
+           
             self.addCardToTheOtherController(aCard)
             
                      }
@@ -118,21 +117,20 @@ extension SearchingForMoreCardsController: MoreCardsCellDelegate {
     }
     
     
-    private func addCardToTheOtherController(_ aCard: CardData){//
-        
-        // because we have a parameter of a article that will need to be put in the index will be the index of whatever article that is put into the function...
-//        guard let index = thereAreMoreCardsArray.firstIndex(of: aCard) else {
-//            return
-//        }
+    private func addCardToTheOtherController(_ aCard: CardData){
         
     
         print("we are now inside of the do catch for the custom delegate of the search controller.")
-                   dP.update(aCard, at: 0)
-//        do{
-//
-//        }catch{
-//            print("error deleting article")
-//        }
+        guard let card = self.selectedCard else {
+                           print("this isnt working try again...")
+                           return
+                       }
+ 
+        do{
+         try  dP.createItem(card)
+        }catch{
+            print("error deleting article")
+        }
     }
     
 }
