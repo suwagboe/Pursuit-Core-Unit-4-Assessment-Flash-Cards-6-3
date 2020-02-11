@@ -14,6 +14,8 @@ class SearchingForMoreCardsController: UIViewController {
     public var dP : DataPersistence<CardData>!
     
     private var moreCardView = MoreCardsView()
+    
+    private var seguedCard : CardData?
 
     private var thereAreMoreCardsArray = [CardData]() {
         didSet {
@@ -36,7 +38,7 @@ class SearchingForMoreCardsController: UIViewController {
   moreCardView.collectionV.dataSource = self
         moreCardView.collectionV.delegate = self
 //
-       moreCardView.collectionV.register(moreCardsCell.self, forCellWithReuseIdentifier: "moreCell")
+       moreCardView.collectionV.register(MoreCardsCell.self, forCellWithReuseIdentifier: "moreCell")
 //        fetchCards()
     }
     
@@ -79,7 +81,7 @@ extension SearchingForMoreCardsController: UICollectionViewDataSource{
         return thereAreMoreCardsArray.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "moreCell", for: indexPath) as? moreCardsCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "moreCell", for: indexPath) as? MoreCardsCell else {
             fatalError("couldnt dequqe... ")
         }
         
@@ -95,7 +97,7 @@ extension SearchingForMoreCardsController: UICollectionViewDataSource{
 }
 
 extension SearchingForMoreCardsController: MoreCardsCellDelegate {
-    func didSelectAddButton(_ moreCardsCell: moreCardsCell, aCard: CardData) {
+    func didSelectAddButton(_ moreCardsCell: MoreCardsCell, aCard: CardData) {
         
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
               
@@ -123,12 +125,14 @@ extension SearchingForMoreCardsController: MoreCardsCellDelegate {
 //            return
 //        }
         
-        do{
-            print("we are now inside of the do catch for the custom delegate of the search controller.")
-            try dP.createItem(aCard)
-        }catch{
-            print("error deleting article")
-        }
+    
+        print("we are now inside of the do catch for the custom delegate of the search controller.")
+                   dP.update(aCard, at: 0)
+//        do{
+//
+//        }catch{
+//            print("error deleting article")
+//        }
     }
     
 }

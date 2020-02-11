@@ -18,7 +18,7 @@
 		557BB18F23F318B500AB0952 /* CardsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB18E23F318B500AB0952 /* CardsAPIClient.swift */; };
 		557BB19123F31D4700AB0952 /* CreatingCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB19023F31D4700AB0952 /* CreatingCardsView.swift */; };
 		557BB19523F321BC00AB0952 /* MoreCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB19423F321BC00AB0952 /* MoreCardsView.swift */; };
-		557BB19723F327D400AB0952 /* moreCardsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB19623F327D400AB0952 /* moreCardsCell.swift */; };
+		557BB19723F327D400AB0952 /* MoreCardsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BB19623F327D400AB0952 /* MoreCardsCell.swift */; };
 		557BB19923F334AC00AB0952 /* cardData.json in Resources */ = {isa = PBXBuildFile; fileRef = 557BB19823F334AC00AB0952 /* cardData.json */; };
 		5790239823F2EE39000AA216 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790239723F2EE39000AA216 /* AppDelegate.swift */; };
 		5790239A23F2EE39000AA216 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790239923F2EE39000AA216 /* SceneDelegate.swift */; };
@@ -48,7 +48,7 @@
 		557BB18E23F318B500AB0952 /* CardsAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsAPIClient.swift; sourceTree = "<group>"; };
 		557BB19023F31D4700AB0952 /* CreatingCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatingCardsView.swift; sourceTree = "<group>"; };
 		557BB19423F321BC00AB0952 /* MoreCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCardsView.swift; sourceTree = "<group>"; };
-		557BB19623F327D400AB0952 /* moreCardsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moreCardsCell.swift; sourceTree = "<group>"; };
+		557BB19623F327D400AB0952 /* MoreCardsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCardsCell.swift; sourceTree = "<group>"; };
 		557BB19823F334AC00AB0952 /* cardData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cardData.json; sourceTree = "<group>"; };
 		5790239423F2EE39000AA216 /* Unit4Assessment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unit4Assessment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5790239723F2EE39000AA216 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,11 +105,9 @@
 		557BB17F23F3004000AB0952 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				557BB18823F30B7800AB0952 /* cardsCell.swift */,
 				557BB18023F3005D00AB0952 /* LookAtMyCardsView.swift */,
 				557BB19023F31D4700AB0952 /* CreatingCardsView.swift */,
 				557BB19423F321BC00AB0952 /* MoreCardsView.swift */,
-				557BB19623F327D400AB0952 /* moreCardsCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -129,6 +127,15 @@
 				557BB18E23F318B500AB0952 /* CardsAPIClient.swift */,
 			);
 			path = APIClient;
+			sourceTree = "<group>";
+		};
+		557BB19A23F3499700AB0952 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				557BB18823F30B7800AB0952 /* cardsCell.swift */,
+				557BB19623F327D400AB0952 /* MoreCardsCell.swift */,
+			);
+			path = cells;
 			sourceTree = "<group>";
 		};
 		5790238B23F2EE39000AA216 = {
@@ -155,6 +162,7 @@
 				557BB18D23F3189400AB0952 /* APIClient */,
 				557BB18A23F30C0C00AB0952 /* model */,
 				557BB17F23F3004000AB0952 /* views */,
+				557BB19A23F3499700AB0952 /* cells */,
 				557BB17923F2FE5F00AB0952 /* Controllers */,
 				557BB17623F2FD4600AB0952 /* supporting files */,
 				579023A523F2EE3B000AA216 /* Info.plist */,
@@ -284,7 +292,7 @@
 				557BB18123F3005D00AB0952 /* LookAtMyCardsView.swift in Sources */,
 				5790239A23F2EE39000AA216 /* SceneDelegate.swift in Sources */,
 				557BB18F23F318B500AB0952 /* CardsAPIClient.swift in Sources */,
-				557BB19723F327D400AB0952 /* moreCardsCell.swift in Sources */,
+				557BB19723F327D400AB0952 /* MoreCardsCell.swift in Sources */,
 				557BB18523F302EA00AB0952 /* CreatingCardsController.swift in Sources */,
 				557BB18323F3007000AB0952 /* LookAtMyCardsController.swift in Sources */,
 				557BB18923F30B7800AB0952 /* cardsCell.swift in Sources */,

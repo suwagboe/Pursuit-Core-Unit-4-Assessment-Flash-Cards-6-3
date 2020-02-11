@@ -10,20 +10,29 @@ import UIKit
 
 protocol MoreCardsCellDelegate: AnyObject {
    
-    func didSelectAddButton(_ moreCardsCell: moreCardsCell, aCard: CardData)
+    func didSelectAddButton(_ moreCardsCell: MoreCardsCell, aCard: CardData)
 }
-
-class moreCardsCell: UICollectionViewCell {
+class MoreCardsCell: UICollectionViewCell {
     // setting the delegate
     weak var delegate: MoreCardsCellDelegate?
 
     private var currentCard: CardData!
-    /*
-     cell has
-     a title
-        2 facts
-     
-     */
+
+    private lazy var longPressGesture: UILongPressGestureRecognizer = {
+         let gesture  = UILongPressGestureRecognizer()
+         gesture.addTarget(self, action: #selector(didLongPress(_:)))
+         return gesture
+     }()
+    
+    // MARK: this is the button...
+       public lazy var addButton: UIButton = {
+            let button = UIButton()
+              button.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
+            
+              button.addTarget(self, action: #selector(AddButtonPressed(_:)), for: .touchUpInside)
+           
+              return button
+          }()
     
     public lazy var cardTitle: UILabel = {
         let label = UILabel()
@@ -38,29 +47,21 @@ class moreCardsCell: UICollectionViewCell {
               label.numberOfLines = 0
               label.font = UIFont.preferredFont(forTextStyle: .caption1)
               label.textColor = .blue
+        // need to set the aplha of one in order for it to toggle properly
+              label.alpha = 0
               return label
     }()
     
     public lazy var factTwo: UILabel = {
              let label = UILabel()
-                 label.numberOfLines = 0
+                 label.numberOfLines = 3
                  label.font = UIFont.preferredFont(forTextStyle: .caption1)
                  label.textColor = .orange
+         label.alpha = 0
                  return label
        }()
     
-    // MARK: this is the button...
-    
-    public lazy var addButton: UIButton = {
-         let button = UIButton()
-           button.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
-           // need to set up the action for the button so the target needs to be added inside of the button properties
-           button.addTarget(self, action: #selector(AddButtonPressed(_:)), for: .touchUpInside)
-           //because we are using custom delegation so we are setting it up here
-           return button
-       }()
-    
-    private var isCurrentCardTitleShowing = false
+    private var isCurrentCardTitleShowing = true
     
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
@@ -75,14 +76,32 @@ class moreCardsCell: UICollectionViewCell {
     private func commonInit() {
         setUpButtonConstraints()
         setUpCardTitleConstraints()
-       
-
+        setUpfactOneConstraints()
+       setUpfactTwooConstraints()
+        cardTitle.isUserInteractionEnabled = true
+                            addGestureRecognizer(longPressGesture)
+        
     }
 
     @objc private func AddButtonPressed(_ sender: UIButton){
+        // this is the button itself
         print("button was pressed for article \(currentCard.quizTitle)")
         delegate?.didSelectAddButton(self, aCard: currentCard)
+        
       }
+    
+       @objc private func didLongPress(_ gesture: UILongPressGestureRecognizer){
+           print("outside gesture")
+        guard currentCard != nil else { return }
+
+           if gesture.state == .began || gesture.state == .changed {
+               print("long pressed")
+               return
+           }
+           isCurrentCardTitleShowing.toggle() // true -> false
+        animate()
+
+       }
     
     // to make it turn..
     private func animate() {
@@ -92,19 +111,21 @@ class moreCardsCell: UICollectionViewCell {
              UIView.transition(with: self , duration: duration, options: [.transitionFlipFromRight], animations: {
                  // this closure is not a network request does not need weak self no network call
                  self.cardTitle.alpha = 1.0
-                 self.factTwo.alpha = 0.0
+                 self.factOne.alpha = 0.0
+                self.factTwo.alpha = 0.0
                  
              }, completion: nil )
          } else {
              UIView.transition(with: self , duration: duration, options: [.transitionFlipFromRight], animations: {
                  // this closure is not a network request does not need weak self no network call
                  self.cardTitle.alpha = 0.0
-                 self.factTwo.alpha = 1.0
-                 
+                 self.factOne.alpha = 1.0
+                self.factTwo.alpha = 1.0
              }, completion: nil )
              
          }
-     }
+     }// the end of the animate function
+   
     private func setUpButtonConstraints(){
         addSubview(addButton)
         
@@ -135,6 +156,30 @@ class moreCardsCell: UICollectionViewCell {
         ])
     }
     
+    private func setUpfactTwooConstraints() {
+       addSubview(factTwo)
+        
+        factTwo.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            factTwo.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            factTwo.leadingAnchor.constraint(equalTo: leadingAnchor),
+            factTwo.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant:  8),
+            factTwo.bottomAnchor.constraint(equalTo: factOne.topAnchor, constant: -8)
+        ])
+    }
+ 
+    private func setUpfactOneConstraints() {
+        addSubview(factOne)
+            
+            factOne.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                factOne.topAnchor.constraint(equalTo: addButton.bottomAnchor),
+                factOne.leadingAnchor.constraint(equalTo: leadingAnchor ),
+                factOne.trailingAnchor.constraint(equalTo: trailingAnchor ),
+                factOne.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+    }
+    
     // need to add the constraints for the card title..
     
     public func configureCell(for addedCard: CardData){
@@ -142,6 +187,7 @@ class moreCardsCell: UICollectionViewCell {
            // need to set the article or it will be nil and it will crash
            cardTitle.text = addedCard.quizTitle
         factOne.text = addedCard.facts.first
+        factTwo.text = addedCard.facts.last
            
        }
     
