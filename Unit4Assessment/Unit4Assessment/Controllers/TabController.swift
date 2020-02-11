@@ -31,14 +31,14 @@ class TabController: UITabBarController {
     private lazy var CCC: CreatingCardsController = {
         let controller = CreatingCardsController()
               controller.tabBarItem = UITabBarItem(title: "Create", image: UIImage(systemName: "pencil.and.outline"), tag: 1)
-              
+        controller.dp = dataPersistence
               return controller
     }()
     
     private lazy var SFMCC: SearchingForMoreCardsController = {
         let controller = SearchingForMoreCardsController()
               controller.tabBarItem = UITabBarItem(title: "search for more", image: UIImage(systemName: "doc.text.magnifyingglass"), tag: 2)
-              
+        controller.dP = dataPersistence
               return controller
     }()
     
