@@ -14,7 +14,9 @@ class CreatingCardsView: UIView {
         let textField = UITextField()
         textField.attributedPlaceholder = NSAttributedString(string: "Enter the title here")
         textField.autocorrectionType = .yes
-        textField.backgroundColor = .red
+        textField.backgroundColor = .systemBlue
+        textField.textAlignment = .center
+        
         return textField
     }()
        
@@ -23,6 +25,8 @@ class CreatingCardsView: UIView {
          textField.attributedPlaceholder = NSAttributedString(string: "Enter one fact here")
          textField.autocorrectionType = .yes
         textField.backgroundColor = .gray
+        textField.textAlignment = .center
+
          return textField
      }()
     
@@ -30,7 +34,9 @@ class CreatingCardsView: UIView {
          let textField = UITextField()
          textField.attributedPlaceholder = NSAttributedString(string: "Enter the next fact here please.")
          textField.autocorrectionType = .yes
-        textField.backgroundColor = .black
+        textField.backgroundColor = .purple
+         textField.textAlignment = .center
+
          return textField
      }()
     
@@ -57,8 +63,9 @@ class CreatingCardsView: UIView {
         
         NSLayoutConstraint.activate([
             titleText.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            titleText.leadingAnchor.constraint(equalTo: leadingAnchor),
-            titleText.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            titleText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            titleText.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         
@@ -70,10 +77,9 @@ class CreatingCardsView: UIView {
         
         NSLayoutConstraint.activate([
             firstFactText.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 10),
-            firstFactText.leadingAnchor.constraint(equalTo: leadingAnchor),
-            firstFactText.trailingAnchor.constraint(equalTo: trailingAnchor),
-            //firstFactText.heightAnchor.constraint(equalTo: <#T##NSLayoutAnchor<NSLayoutDimension>#>)
-               ])
+            firstFactText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            firstFactText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            firstFactText.heightAnchor.constraint(equalToConstant: 50 )              ])
     
        }
     
@@ -83,8 +89,9 @@ class CreatingCardsView: UIView {
         
         NSLayoutConstraint.activate([
             secondFactText.topAnchor.constraint(equalTo: firstFactText.bottomAnchor, constant: 10),
-            secondFactText.leadingAnchor.constraint(equalTo: leadingAnchor),
-            secondFactText.trailingAnchor.constraint(equalTo: trailingAnchor),
+            secondFactText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            secondFactText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            secondFactText.heightAnchor.constraint(equalToConstant: 50 )
                ])
         
     }
