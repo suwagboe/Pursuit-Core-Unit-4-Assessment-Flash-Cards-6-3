@@ -7,25 +7,46 @@
 //
 
 import UIKit
+import DataPersistence
 
 class TabController: UITabBarController {
+    
+/*
+     instance of persistence
+     3 tabs:
+        - card tab
+        - create tab
+        - search for new ones tab
+     */
 
+    private var dataPersistence = DataPersistence<String>(filename: "")
+    
+    private lazy var LAMCC: LookAtMyCardsController = {
+      let controller = LookAtMyCardsController()
+            controller.tabBarItem = UITabBarItem(title: "Cards", image: UIImage(systemName: "doc.plaintext"), tag: 0)
+            
+            return controller
+    }()
+    
+    private lazy var CCC: CreatingCardsController = {
+        let controller = CreatingCardsController()
+              controller.tabBarItem = UITabBarItem(title: "Create", image: UIImage(systemName: "pencil.and.outline"), tag: 1)
+              
+              return controller
+    }()
+    
+    private lazy var SFMCC: SearchingForMoreCardsController = {
+        let controller = SearchingForMoreCardsController()
+              controller.tabBarItem = UITabBarItem(title: "search for more", image: UIImage(systemName: "doc.text.magnifyingglass"), tag: 2)
+              
+              return controller
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemPink
-        
+// do I need a naviagtion controller in order to pass things
+        view.backgroundColor = .systemGroupedBackground
+        viewControllers = [LAMCC, CCC, SFMCC]
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
