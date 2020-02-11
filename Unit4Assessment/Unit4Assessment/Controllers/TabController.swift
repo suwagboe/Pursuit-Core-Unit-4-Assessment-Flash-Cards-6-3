@@ -19,7 +19,7 @@ class TabController: UITabBarController {
         - search for new ones tab
      */
 
-    private var dataPersistence = DataPersistence<String>(filename: "")
+    private var dataPersistence = DataPersistence<CardData>(filename: "savedCards.plist")
     
     private lazy var LAMCC: LookAtMyCardsController = {
       let controller = LookAtMyCardsController()

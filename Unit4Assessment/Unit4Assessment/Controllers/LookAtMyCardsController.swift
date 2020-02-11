@@ -15,7 +15,7 @@ class LookAtMyCardsController: UIViewController {
      needs a more button.. 
      */
     
-    public var dataP : DataPersistence<String>!
+    public var dataP : DataPersistence<CardData>!
     
     private var cardsView = LookAtMyCardsView()
 
@@ -25,6 +25,17 @@ class LookAtMyCardsController: UIViewController {
     
     //need the model to populate things inside of my collection view...
     
+    // an array of cards
+    
+    private var addedCards = [CardData]() {
+        didSet{
+            self.cardsView.collectionV.reloadData()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +46,13 @@ class LookAtMyCardsController: UIViewController {
 
         // need to set the cell here.
         
-        cardsView.collectionV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cardsCell")
+        cardsView.collectionV.register(cardsCell.self, forCellWithReuseIdentifier: "cardsCell")
         
         view.backgroundColor = .systemGroupedBackground
     }
-    
+    private func fetchCards(){
+        
+    }
 
 }
 
@@ -53,13 +66,18 @@ extension LookAtMyCardsController: UICollectionViewDelegateFlowLayout {
 
 extension LookAtMyCardsController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return addedCards.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardsCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardsCell", for: indexPath) as? cardsCell else {
+            fatalError("couldn't dequqe as cardsCell")
+        }
+        
+        let selectedCard = addedCards[indexPath.row]
+      //  cell.delegate is the delegate set here?????
         
         cell.backgroundColor = .white
-        
+        cell.configureCell(for: selectedCard)
         return cell
     }
 }
