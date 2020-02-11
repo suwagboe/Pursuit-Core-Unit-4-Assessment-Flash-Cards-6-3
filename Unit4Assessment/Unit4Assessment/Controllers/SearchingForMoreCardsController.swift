@@ -18,6 +18,12 @@ class SearchingForMoreCardsController: UIViewController {
     override func loadView() {
         view = moreCardView
     }
+    
+    private var thereAreMoreCardsArray = [CardData]() {
+        didSet {
+            moreCardView.collectionV.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +35,18 @@ class SearchingForMoreCardsController: UIViewController {
         
         moreCardView.collectionV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "moreCell")
     }
-    
+      private func fetchCards(){
+          CardsAPIClient.getTheCardInfo {
+              [weak self]
+              (result) in
+              switch result {
+              case .failure:
+                  break
+              case .success(let cards):
+                  self?.thereAreMoreCardsArray = cards
+              }
+          }
+      }
 
 }
 
@@ -41,7 +58,7 @@ extension SearchingForMoreCardsController: UICollectionViewDelegateFlowLayout {
 
 extension SearchingForMoreCardsController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return thereAreMoreCardsArray.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "moreCell", for: indexPath)

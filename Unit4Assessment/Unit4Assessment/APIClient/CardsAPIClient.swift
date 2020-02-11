@@ -9,7 +9,7 @@
 import Foundation
 import NetworkHelper
 
-struct loadCardsData{
+struct CardsAPIClient{
     
     static func getTheCardInfo(completion: @escaping (Result<[CardData],AppError>) -> ()){
         // only needs completion because the url is the direct link to the infomation no extra filter necessay..

@@ -51,7 +51,16 @@ class LookAtMyCardsController: UIViewController {
         view.backgroundColor = .systemGroupedBackground
     }
     private func fetchCards(){
-        
+        CardsAPIClient.getTheCardInfo {
+            [weak self]
+            (result) in
+            switch result {
+            case .failure:
+                break
+            case .success(let cards):
+                self?.addedCards = cards
+            }
+        }
     }
 
 }
