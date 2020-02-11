@@ -76,7 +76,7 @@ class cardsCell: UICollectionViewCell {
     }
     
     private func commonInit() {
-        
+        setUpCardTitleConstraints()
         
     }
 
@@ -120,6 +120,8 @@ class cardsCell: UICollectionViewCell {
         
         ])
     }
+    
+    // need to add the constraints for the card title..
     
     public func configureCell(for addedCard: CardData){
            currentCard = addedCard // associating the cell with its article
