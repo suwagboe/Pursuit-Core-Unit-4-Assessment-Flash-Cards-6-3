@@ -61,15 +61,25 @@ extension SearchingForMoreCardsController: UICollectionViewDataSource{
         return thereAreMoreCardsArray.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "moreCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "moreCell", for: indexPath) as? MoreCardsCell else {
+            fatalError("couldnt dequqe... ")
+        }
         
         
-      //  let selectedCard = addedCards[indexPath.row]
+        let selectedCard = thereAreMoreCardsArray[indexPath.row]
       //  cell.delegate is the delegate set here?????
-        
+        cell.delegate = self
         cell.backgroundColor = .white
     
-       // cell.configureCell(for: selectedCard)
+       cell.configureCell(for: selectedCard)
         return cell
     }
+}
+
+extension SearchingForMoreCardsController: MoreCardsCellDelegate {
+    func didSelectAddButton(_ moreCardsCell: MoreCardsCell, aCard: CardData) {
+        //
+    }
+    
+    
 }

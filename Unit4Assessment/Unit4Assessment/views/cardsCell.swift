@@ -18,7 +18,7 @@ protocol CardsCellDelegate: AnyObject {
 
 class cardsCell: UICollectionViewCell {
     // setting the delegate
-    private var delegate: CardsCellDelegate?
+    weak var delegate: CardsCellDelegate?
 
     private var currentCard: CardData!
     /*
@@ -126,8 +126,9 @@ class cardsCell: UICollectionViewCell {
     public func configureCell(for addedCard: CardData){
            currentCard = addedCard // associating the cell with its article
            // need to set the article or it will be nil and it will crash
-           cardTitle.text = addedCard.cardTitle
-           
+               cardTitle.text = addedCard.cardTitle
+              factOne.text = addedCard.facts.first
+              factTwo.text = addedCard.facts.last
        }
     
 }

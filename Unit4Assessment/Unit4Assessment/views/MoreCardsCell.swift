@@ -11,13 +11,11 @@ import UIKit
 protocol MoreCardsCellDelegate: AnyObject {
    
     func didSelectAddButton(_ moreCardsCell: MoreCardsCell, aCard: CardData)
-    
-   
 }
 
 class MoreCardsCell: UICollectionViewCell {
     // setting the delegate
-    private var delegate: MoreCardsCellDelegate?
+    weak var delegate: MoreCardsCellDelegate?
 
     private var currentCard: CardData!
     /*
@@ -126,6 +124,8 @@ class MoreCardsCell: UICollectionViewCell {
            currentCard = addedCard // associating the cell with its article
            // need to set the article or it will be nil and it will crash
            cardTitle.text = addedCard.cardTitle
+        factOne.text = addedCard.facts.first
+        factTwo.text = addedCard.facts.last
            
        }
     
