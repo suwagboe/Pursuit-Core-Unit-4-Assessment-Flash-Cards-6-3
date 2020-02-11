@@ -24,7 +24,7 @@ class TabController: UITabBarController {
     private lazy var LAMCC: LookAtMyCardsController = {
       let controller = LookAtMyCardsController()
             controller.tabBarItem = UITabBarItem(title: "Cards", image: UIImage(systemName: "doc.plaintext"), tag: 0)
-            
+        controller.dataP = dataPersistence
             return controller
     }()
     
