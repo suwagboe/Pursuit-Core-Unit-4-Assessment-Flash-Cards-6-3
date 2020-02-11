@@ -30,7 +30,7 @@ class cardsCell: UICollectionViewCell {
     
     public lazy var cardTitle: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .systemPink
         return label
@@ -38,7 +38,7 @@ class cardsCell: UICollectionViewCell {
     
     public lazy var factOne: UILabel = {
           let label = UILabel()
-              label.numberOfLines = 0
+              label.numberOfLines = 2
               label.font = UIFont.preferredFont(forTextStyle: .caption1)
               label.textColor = .blue
               return label
@@ -46,7 +46,7 @@ class cardsCell: UICollectionViewCell {
     
     public lazy var factTwo: UILabel = {
              let label = UILabel()
-                 label.numberOfLines = 0
+                 label.numberOfLines = 2
                  label.font = UIFont.preferredFont(forTextStyle: .caption1)
                  label.textColor = .orange
                  return label
@@ -113,7 +113,7 @@ class cardsCell: UICollectionViewCell {
         cardTitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            cardTitle.topAnchor.constraint(equalTo: moreButton.bottomAnchor),
+            cardTitle.topAnchor.constraint(equalTo: topAnchor),
             cardTitle.leadingAnchor.constraint(equalTo: leadingAnchor),
             cardTitle.trailingAnchor.constraint(equalTo: trailingAnchor),
             cardTitle.bottomAnchor.constraint(equalTo: bottomAnchor)

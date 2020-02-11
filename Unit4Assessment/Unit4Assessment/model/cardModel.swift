@@ -19,3 +19,31 @@ struct CardData: Codable & Equatable {
     let facts: [String]
     let userId: String?
 }
+
+extension Cards {
+    
+    static func getData() -> [CardData] {
+                
+        var holdingCardData = [CardData]()
+        
+        guard let fileURL = Bundle.main.url(forResource: "cardData", withExtension: "json") else {
+            fatalError("couldnt locate json files SORRHYY")
+        }
+        
+        do {
+            
+            let data = try Data(contentsOf: fileURL)
+            
+            let actualData = try JSONDecoder().decode(Cards.self, from: data)
+            
+           holdingCardData = actualData.cards
+            
+        } catch {
+            
+            fatalError("could not catch the data.. be better.. \(error)")
+            
+        }
+        return holdingCardData
+    }
+    
+}
