@@ -8,19 +8,18 @@
 
 import Foundation
 
-struct Cards: Codable & Equatable{
-    let cardListType: String
-    let cards: [CardData]
-}
+//struct Cards: Codable & Equatable{
+//    let cards: [CardData]
+//}
 
 struct CardData: Codable & Equatable {
-    let id: Int
-    let cardTitle: String
+    let id: String
+    let quizTitle: String
     let facts: [String]
     let userId: String?
 }
 
-extension Cards {
+extension CardData {
     
     static func getData() -> [CardData] {
                 
@@ -34,14 +33,14 @@ extension Cards {
             
             let data = try Data(contentsOf: fileURL)
             
-            let actualData = try JSONDecoder().decode(Cards.self, from: data)
+            let actualData = try JSONDecoder().decode([CardData].self, from: data)
             
-           holdingCardData = actualData.cards
+            holdingCardData = actualData
             
         } catch {
-            
+            print(error)
+
             fatalError("could not catch the data.. be better.. \(error)")
-            
         }
         return holdingCardData
     }

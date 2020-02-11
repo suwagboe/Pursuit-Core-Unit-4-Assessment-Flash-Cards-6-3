@@ -12,8 +12,6 @@ import  ImageKit
 protocol CardsCellDelegate: AnyObject {
    
     func didSelectMoreButton(_ cardsCell: cardsCell, aCard: CardData)
-    
-   
 }
 
 class cardsCell: UICollectionViewCell {
@@ -77,11 +75,11 @@ class cardsCell: UICollectionViewCell {
     
     private func commonInit() {
         setUpCardTitleConstraints()
-        
+        setUpButtonConstraints()
     }
 
     @objc private func moreButtonPressed(_ sender: UIButton){
-        print("button was pressed for article \(currentCard.cardTitle)")
+        print("button was pressed for article \(currentCard.quizTitle)")
           delegate?.didSelectMoreButton(self, aCard: currentCard)
       }
     
@@ -106,7 +104,22 @@ class cardsCell: UICollectionViewCell {
              
          }
      }
-    
+    private func setUpButtonConstraints(){
+        addSubview(moreButton)
+        
+        moreButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            moreButton.topAnchor.constraint(equalTo: topAnchor),
+            moreButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            moreButton.heightAnchor.constraint(equalToConstant: 44)
+            // it is 44 because in the apple doc that is what they say to use
+            ,
+            moreButton.widthAnchor.constraint(equalTo: moreButton.heightAnchor)
+        
+        ])
+    }
+
     private func setUpCardTitleConstraints(){
         addSubview(cardTitle)
         
@@ -126,9 +139,8 @@ class cardsCell: UICollectionViewCell {
     public func configureCell(for addedCard: CardData){
            currentCard = addedCard // associating the cell with its article
            // need to set the article or it will be nil and it will crash
-               cardTitle.text = addedCard.cardTitle
-              factOne.text = addedCard.facts.first
-              factTwo.text = addedCard.facts.last
+               cardTitle.text = addedCard.quizTitle
+        factOne.text = addedCard.facts.first
        }
     
 }

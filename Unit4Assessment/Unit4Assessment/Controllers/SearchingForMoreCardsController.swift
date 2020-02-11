@@ -15,10 +15,6 @@ class SearchingForMoreCardsController: UIViewController {
     
     private var moreCardView = MoreCardsView()
 
-    override func loadView() {
-        view = moreCardView
-    }
-    
     private var thereAreMoreCardsArray = [CardData]() {
         didSet {
             DispatchQueue.main.async {
@@ -27,17 +23,21 @@ class SearchingForMoreCardsController: UIViewController {
             }
         }
     }
-
+    
+    override func loadView() {
+        view = moreCardView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .purple
-        
-        moreCardView.collectionV.dataSource = self
+//
+  moreCardView.collectionV.dataSource = self
         moreCardView.collectionV.delegate = self
-        
-        moreCardView.collectionV.register(MoreCardsCell.self, forCellWithReuseIdentifier: "moreCell")
-        fetchCards()
+//
+       moreCardView.collectionV.register(moreCardsCell.self, forCellWithReuseIdentifier: "moreCell")
+//        fetchCards()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,16 +46,18 @@ class SearchingForMoreCardsController: UIViewController {
     }
     
       private func fetchCards(){
-          CardsAPIClient.getTheCardInfo {
-              [weak self]
-              (result) in
-              switch result {
-              case .failure(let error):
-                             print("well its not working\(error)")
-              case .success(let cards):
-                  self?.thereAreMoreCardsArray = cards
-              }
-          }
+        thereAreMoreCardsArray = CardData.getData()
+
+//          CardsAPIClient.getTheCardInfo {
+//              [weak self]
+//              (result) in
+//              switch result {
+//              case .failure(let error):
+//                             print("well its not working\(error)")
+//              case .success(let cards):
+//                  self?.thereAreMoreCardsArray = cards
+//              }
+//          }
       }
 }
 
@@ -77,7 +79,7 @@ extension SearchingForMoreCardsController: UICollectionViewDataSource{
         return thereAreMoreCardsArray.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "moreCell", for: indexPath) as? MoreCardsCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "moreCell", for: indexPath) as? moreCardsCell else {
             fatalError("couldnt dequqe... ")
         }
         
@@ -93,7 +95,7 @@ extension SearchingForMoreCardsController: UICollectionViewDataSource{
 }
 
 extension SearchingForMoreCardsController: MoreCardsCellDelegate {
-    func didSelectAddButton(_ moreCardsCell: MoreCardsCell, aCard: CardData) {
+    func didSelectAddButton(_ moreCardsCell: moreCardsCell, aCard: CardData) {
         
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
               

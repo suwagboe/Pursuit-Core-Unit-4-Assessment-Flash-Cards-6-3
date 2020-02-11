@@ -57,16 +57,17 @@ class LookAtMyCardsController: UIViewController {
       }
       
     private func fetchCards(){
-        CardsAPIClient.getTheCardInfo {
-            [weak self]
-            (result) in
-            switch result {
-            case .failure(let error):
-                print("well its not working\(error)")
-            case .success(let cards):
-                self?.addedCards = cards
-            }
-        }
+       addedCards = CardData.getData()
+//        CardsAPIClient.getTheCardInfo {
+//                 [weak self]
+//                 (result) in
+//                 switch result {
+//                 case .failure(let error):
+//                                print("well its not working\(error)")
+//                 case .success(let cards):
+//                     self?.addedCards = cards
+//             }
+//         }
     }
 
 }
@@ -88,7 +89,7 @@ extension LookAtMyCardsController: UICollectionViewDelegateFlowLayout {
     // MARK: this is called here because it is an action and we want when the item is selected to transfer the data ...
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let article = addedCards[indexPath.row]
+      //  let article = addedCards[indexPath.row]
         
         
         // need an instance of article detail view controller

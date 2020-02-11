@@ -10,10 +10,10 @@ import UIKit
 
 protocol MoreCardsCellDelegate: AnyObject {
    
-    func didSelectAddButton(_ moreCardsCell: MoreCardsCell, aCard: CardData)
+    func didSelectAddButton(_ moreCardsCell: moreCardsCell, aCard: CardData)
 }
 
-class MoreCardsCell: UICollectionViewCell {
+class moreCardsCell: UICollectionViewCell {
     // setting the delegate
     weak var delegate: MoreCardsCellDelegate?
 
@@ -51,7 +51,7 @@ class MoreCardsCell: UICollectionViewCell {
     
     // MARK: this is the button...
     
-    public lazy var AddButton: UIButton = {
+    public lazy var addButton: UIButton = {
          let button = UIButton()
            button.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
            // need to set up the action for the button so the target needs to be added inside of the button properties
@@ -73,12 +73,14 @@ class MoreCardsCell: UICollectionViewCell {
     }
     
     private func commonInit() {
+        setUpButtonConstraints()
         setUpCardTitleConstraints()
-        
+       
+
     }
 
     @objc private func AddButtonPressed(_ sender: UIButton){
-        print("button was pressed for article \(currentCard.cardTitle)")
+        print("button was pressed for article \(currentCard.quizTitle)")
         delegate?.didSelectAddButton(self, aCard: currentCard)
       }
     
@@ -103,14 +105,29 @@ class MoreCardsCell: UICollectionViewCell {
              
          }
      }
-    
+    private func setUpButtonConstraints(){
+        addSubview(addButton)
+        
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            addButton.topAnchor.constraint(equalTo: topAnchor),
+            addButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            addButton.heightAnchor.constraint(equalToConstant: 44)
+            // it is 44 because in the apple doc that is what they say to use
+            ,
+            addButton.widthAnchor.constraint(equalTo: addButton.heightAnchor)
+        
+        ])
+    }
+
     private func setUpCardTitleConstraints(){
         addSubview(cardTitle)
         
         cardTitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            cardTitle.topAnchor.constraint(equalTo: AddButton.bottomAnchor),
+            cardTitle.topAnchor.constraint(equalTo: addButton.bottomAnchor),
             cardTitle.leadingAnchor.constraint(equalTo: leadingAnchor),
             cardTitle.trailingAnchor.constraint(equalTo: trailingAnchor),
             cardTitle.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -123,9 +140,8 @@ class MoreCardsCell: UICollectionViewCell {
     public func configureCell(for addedCard: CardData){
            currentCard = addedCard // associating the cell with its article
            // need to set the article or it will be nil and it will crash
-           cardTitle.text = addedCard.cardTitle
+           cardTitle.text = addedCard.quizTitle
         factOne.text = addedCard.facts.first
-        factTwo.text = addedCard.facts.last
            
        }
     

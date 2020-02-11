@@ -8,7 +8,7 @@
 
 import Foundation
 import NetworkHelper
-
+/*
 struct CardsAPIClient{
     
     static func getTheCardInfo(completion: @escaping (Result<[CardData],AppError>) -> ()){
@@ -43,3 +43,5 @@ struct CardsAPIClient{
         
     }
 }
+
+*/
