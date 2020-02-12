@@ -23,7 +23,7 @@ class LookAtMyCardsController: UIViewController {
     
     // an array of cards
     
-    private var addedCards = [CardData]() {
+    public var addedCards = [CardData]() {
         didSet{
             DispatchQueue.main.async {
                 self.cardsView.collectionV.reloadData()

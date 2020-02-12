@@ -15,6 +15,8 @@ class CreatingCardsController: UIViewController {
    
     private let createsView = CreatingCardsView()
     
+    public let theCreatedCard: CardData? = nil 
+    
     override func loadView() {
        view = createsView
     }
@@ -24,17 +26,49 @@ class CreatingCardsController: UIViewController {
 
         view.backgroundColor = .systemPink
        // createsView.firstFactText.de
+         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addTheCardToTheArray(_:)))
+        
+        createsView.titleText.delegate = self
+        createsView.firstFactText.delegate = self
+        createsView.secondFactText.delegate = self
     }
     
+    
 
-    /*
-    // MARK: - Navigation
+    @objc
+          private func addTheCardToTheArray(_ sender: UIBarButtonItem){
+        
+           guard let card = theCreatedCard else {
+               return
+           }
+              print("saved an article button p ressed")
+           do {
+               // saved to  the documents directory
+               try dp.createItem(card)
+               // alert that the time was saved
+               
+           }catch {
+               print("error saving article: \(error)")
+           }
+           
+           // this is where the delegate comes in because after it is saved it needs to be passed...
+              
+          }
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension CreatingCardsController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if createsView.titleText.text!.isEmpty {
+            //the show an alert
+            
+        } else if createsView.firstFactText.text!.isEmpty{
+            
+        } else if createsView.secondFactText.text!.isEmpty {
+            
+        }
+        
+        return true 
     }
-    */
-
+    
 }
