@@ -44,36 +44,37 @@ class CreatingCardsController: UIViewController {
         showAlert(title: "Your GOOD", message: "the new card you made has now been added")
         theCreatedCard = CardData(id: String.getISOTimestamp(), quizTitle: cardTitle, facts: [firstFact, secondFact], userId: "shaniya")
         
+       
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            // your code here delayed by 0.5 seconds
+            
+              self.tabBarController?.selectedIndex = 0
+        }
+        
         do{
           try dp.createItem(theCreatedCard!)
+            
+            
+            
         }catch {
            showAlert(title: "something, went wrong", message: "this didn't save propery.. please try again.")
         }
-          }
-    
-    /*
-     guard let card = theCreatedCard else {
-                   return
-               }
-            
-                  print("saved an article button p ressed")
-               do {
-                   // saved to  the documents directory
-                   try dp.createItem(card)
-                   // alert that the time was saved
-                   
-               }catch {
-                   print("error saving article: \(error)")
-               }
-               
-               // this is where the delegate comes in because after it is saved it needs to be passed...
-                  
-     */
-    
+    }
     
 }
 
 extension CreatingCardsController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if theCreatedCard != nil {
+            // should make the textfield empty after
+        //https://stackoverflow.com/questions/37084537/how-to-clear-text-field
+            
+            createsView.firstFactText.text = ""
+            createsView.secondFactText.text = ""
+            createsView.titleText.text = ""
+            
+        }
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -82,7 +83,7 @@ extension CreatingCardsController: UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
+//https://stackoverflow.com/questions/37119804/how-to-prevent-empty-or-whitespaces-in-uitextfield-in-swift
      guard range.location == 0 else {
             return true
         }

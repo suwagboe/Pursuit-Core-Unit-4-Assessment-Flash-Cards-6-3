@@ -137,7 +137,8 @@ extension SearchingForMoreCardsController: MoreCardsCellDelegate {
 
             }
             
-            //self.navigationController?.pushViewController(self.mainControllerInstance, animated: true)
+            self.tabBarController?.selectedIndex = 0
+
                      }
                      
                      alertController.addAction(cancelAction)
