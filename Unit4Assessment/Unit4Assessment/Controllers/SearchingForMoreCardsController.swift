@@ -155,9 +155,11 @@ extension SearchingForMoreCardsController: MoreCardsCellDelegate {
 //                           print("this isnt working try again...")
 //                           return
 //                       }
- 
+       // guard let index = aCard
         do{
+        
          try  dP.createItem(aCard)
+           
             print("the card was saved")
         }catch{
             print("error deleting article\(error)")
