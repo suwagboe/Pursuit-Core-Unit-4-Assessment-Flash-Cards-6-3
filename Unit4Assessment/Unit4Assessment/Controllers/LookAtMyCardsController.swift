@@ -10,18 +10,10 @@ import UIKit
 import DataPersistence
 
 class LookAtMyCardsController: UIViewController {
-    /*
-     want to be able to delete the card if they choose.
-     needs a more button.. 
-     */
     
     public var dataP : DataPersistence<CardData>!
     
     private let cardsView = LookAtMyCardsView()
-    
-    //need the model to populate things inside of my collection view...
-    
-    // an array of cards
     
     public var addedCards = [CardData]() {
         didSet{
@@ -41,40 +33,25 @@ class LookAtMyCardsController: UIViewController {
         cardsView.collectionV.delegate = self
         
         cardsView.searchBar.delegate = self
-
-        // need to set the cell here.
         
         cardsView.collectionV.register(cardsCell.self, forCellWithReuseIdentifier: "cardsCell")
         
         view.backgroundColor = .systemGroupedBackground
         fetchCards()
     }
-    
-    
+
       override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
           fetchCards()
       }
       
     private func fetchCards(){
-     
         do {
             addedCards = try dataP.loadItems()
         } catch {
             print("these are the errors \(error)")
         }
-//        CardsAPIClient.getTheCardInfo {
-//                 [weak self]
-//                 (result) in
-//                 switch result {
-//                 case .failure(let error):
-//                                print("well its not working\(error)")
-//                 case .success(let cards):
-//                     self?.addedCards = cards
-//             }
-//         }
     }
-
 }
 
 extension LookAtMyCardsController: UISearchBarDelegate {
@@ -90,28 +67,6 @@ extension LookAtMyCardsController: UICollectionViewDelegateFlowLayout {
         let itemHeight: CGFloat = maxSize.height * 0.15 // make it 30%
         return CGSize(width: itemWidth, height: itemHeight)
     }
-    
-    // MARK: this is called here because it is an action and we want when the item is selected to transfer the data ...
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-      //  let article = addedCards[indexPath.row]
-        
-        
-        // need an instance of article detail view controller
-        //let articleDVC = AtrticleDetailController()
-     
-        //Todo: after assessment we will be using initilizers as dependency inhection mechanims ...
-       // articleDVC.seguedArticle = article
-        
-        // this here segues the data persistence instence that we have here to the detail views datapersistence which is called dp...
-        // giving it the same persistence instance that is here...
-       // articleDVC.dp = dataPersistence
-        
-        // MARK: make sure that you embeed it in a nav controller
-        // the below code WILL NOT WORK WITHOUT the newfeedController being embeeded because the navigationController is nil... and its nill because the main view controller does not have navigation controller..
-        //navigationController?.pushViewController(articleDVC, animated: true)
-    }
-    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // it inheretes from scroll view....
@@ -151,8 +106,10 @@ extension LookAtMyCardsController: CardsCellDelegate {
                let deleteAction = UIAlertAction(title:"delete", style: .destructive) {
                    alertAction in
                    //write a delelte helper function in order to actually delete something...
+                print("it will be printed")
                    self.deleteAcard(aCard) // to remove the article
                    // the delegate method is getting called
+                self.fetchCards()
                }
                
                alertController.addAction(cancelAction)
@@ -173,6 +130,15 @@ extension LookAtMyCardsController: CardsCellDelegate {
                print("error deleting article")
            }
        }
+}
+
+extension LookAtMyCardsController: DataPersistenceDelegate {
+    func didSaveItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
+       // fetchCards()
+    }
     
-    
+    func didDeleteItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
+      //  fetchCards()
+        
+    }
 }
