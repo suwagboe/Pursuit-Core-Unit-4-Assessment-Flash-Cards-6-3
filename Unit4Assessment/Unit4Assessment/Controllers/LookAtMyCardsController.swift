@@ -23,6 +23,8 @@ class LookAtMyCardsController: UIViewController {
         }
     }
     
+    private var anotherArr = Set([CardData]())
+    
     override func loadView() {
          view = cardsView
      }
@@ -38,21 +40,45 @@ class LookAtMyCardsController: UIViewController {
         
         view.backgroundColor = .systemGroupedBackground
         fetchCards()
+      //  checkForDuplicates()
     }
 
       override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
           fetchCards()
+       // checkForDuplicates()
       }
       
     private func fetchCards(){
         do {
             addedCards = try dataP.loadItems()
-        } catch {
+            }catch {
             print("these are the errors \(error)")
         }
     }
+    
+ 
+    private func checkForDuplicates() {
+       
+        for card in addedCards {
+            //if card.id ==
+            if addedCards.contains(card){
+                anotherArr.insert(card)
+            }
+        }
+    }
+    
+    
 }
+
+/*
+ for card in addedCards{
+     if let index = addedCards.firstIndex(of: card) {
+                             addedCards.remove(at: index)
+         return
+     }
+
+ */
 
 extension LookAtMyCardsController: UISearchBarDelegate {
     
@@ -86,9 +112,7 @@ extension LookAtMyCardsController: UICollectionViewDataSource{
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardsCell", for: indexPath) as? cardsCell else {
             fatalError("couldn't dequqe as cardsCell")
         }
-        
         let selectedCard = addedCards[indexPath.row]
-      //  cell.delegate is the delegate set here?????
         cell.delegate = self
         cell.backgroundColor = .white
         cell.configureCell(for: selectedCard)
@@ -111,12 +135,10 @@ extension LookAtMyCardsController: CardsCellDelegate {
                    // the delegate method is getting called
                 self.fetchCards()
                }
-               
                alertController.addAction(cancelAction)
                alertController.addAction(deleteAction)
                
                present(alertController, animated: true)
-        
     }
     
     private func deleteAcard(_ aCard: CardData){//
@@ -134,11 +156,11 @@ extension LookAtMyCardsController: CardsCellDelegate {
 
 extension LookAtMyCardsController: DataPersistenceDelegate {
     func didSaveItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
-       // fetchCards()
+        fetchCards()
     }
     
     func didDeleteItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
-      //  fetchCards()
+        fetchCards()
         
     }
 }

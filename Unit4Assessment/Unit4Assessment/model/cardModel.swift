@@ -12,11 +12,12 @@ import Foundation
 //    let cards: [CardData]
 //}
 
-struct CardData: Codable & Equatable {
+struct CardData: Codable & Equatable & Hashable{
     let id: String
     let quizTitle: String
     let facts: [String]
     let userId: String?
+    let currentDate: Date?
 }
 
 extension CardData {
